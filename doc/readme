@@ -1,0 +1,8 @@
+1、Pwn题中修改程序连接库的方法，即加载目标lib方法
+   参考https://blog.csdn.net/github_36788573/article/details/103291343
+
+git clone https://github.com/matrix1001/glibc-all-in-one
+cd glibc-all-in-one
+chmod +x download
+chmod +x extract
+ ./download 2.23-0ubuntu10_i386
