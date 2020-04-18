@@ -1,2 +1,23 @@
 参考 https://www.jianshu.com/p/2f59ab123cc1
 https://blog.csdn.net/CliffordR/article/details/82747112
+
+1、通过pem文件获取N和e
+方法1、使用openssl解码
+openssl rsa -pubin -text -modulus -in warmup -in pubkey.pem
+
+方法2、
+import rsa
+
+with open('crypto7/pubkey.pem','rb') as f1:
+    re = f1.read()
+
+pubkey = rsa.PublicKey.load_pkcs1_openssl_pem(re)
+print pubkey.e
+print pubkey.n
+
+
+
+
+
+
+
