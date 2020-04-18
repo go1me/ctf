@@ -1,5 +1,7 @@
 参考 https://www.jianshu.com/p/2f59ab123cc1
 https://blog.csdn.net/CliffordR/article/details/82747112
+https://www.k2zone.cn/?p=2157
+
 
 1、通过pem文件获取N和e
 方法1、使用openssl解码
@@ -8,7 +10,7 @@ openssl rsa -pubin -text -modulus -in warmup -in pubkey.pem
 方法2、
 import rsa
 
-with open('crypto7/pubkey.pem','rb') as f1:
+with open('pubkey.pem','rb') as f1:
     re = f1.read()
 
 pubkey = rsa.PublicKey.load_pkcs1_openssl_pem(re)
@@ -16,8 +18,83 @@ print pubkey.e
 print pubkey.n
 
 
+RSA Public-Key: (256 bit)
+Modulus:
+    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:
+    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:
+    be:30:dd
+Exponent: 65537 (0x10001)
+Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD
+writing RSA key
+-----BEGIN PUBLIC KEY-----
+MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr
+yigb/+l/vjDdAgMBAAE=
+-----END PUBLIC KEY-----
+
+ python3 1_n_e.py
+65537
+87924348264132406875276140514499937145050893665602592992418171647042491658461
 
 
+2、分解N
+这里的话暂时来说有两种方法，第一种：http://factordb.com/这个网站。输入N基本会分解出P和Q。但也有时候输入N分解不出P和Q，那么久用第二种方法。
+
+首先打开cmd，进入yafu所在路径，输入yafu-64的命令，进入yafu工作阶段。输入
+factor(30578675145816634962204467309994126955968568987449100734690153203822106214253)然后回车
 
 
+3、解码
+
+import rsa
+import gmpy2
+
+with open('pubkey.pem','rb') as f1:
+    re = f1.read()
+
+pubkey = rsa.PublicKey.load_pkcs1_openssl_pem(re)
+p = 319576316814478949870590164193048041239
+q = 275127860351348928173285174381581152299
+fn = (p-1) * (q-1)
+
+d = gmpy2.invert(pubkey.e,fn)
+d = int(d)
+
+with open('flag.enc','rb') as f2:
+    flag = f2.read()
+
+privatekey = rsa.PrivateKey(pubkey.n , pubkey.e , d , p , q)
+print rsa.decrypt(flag,privatekey)
+
+-------------------------------------
+
+3.然后使用msieve进行分解n值msieve下载地址：https://sourceforge.net/projects/msieve/>msieve153.exe 0xC0332C5C64AE47182F6C1C876D42336910545A58F7EEFEFC0BCAAF5AF341CCDD -v
+
+
+生产私钥
+import sys
+import math
+from Crypto.PublicKey import RSA
+
+keypair = RSA.generate(1024)
+
+keypair.p = 250527704258269
+keypair.q = 74891071972884336452892671945839935839027130680745292701175368094445819328761543101567760612778187287503041052186054409602799660254304070752542327616415127619185118484301676127655806327719998855075907042722072624352495417865982621374198943186383488123852345021090112675763096388320624127451586578874243946255833495297552979177208715296225146999614483257176865867572412311362252398105201644557511678179053171328641678681062496129308882700731534684329411768904920421185529144505494827908706070460177001921614692189821267467546120600239688527687872217881231173729468019623441005792563703237475678063375349
+keypair.e = 65537
+
+keypair.n = keypair.p * keypair.q
+Qn = long((keypair.p-1) * (keypair.q-1))
+
+i = 1
+while (True):
+    x = (Qn * i ) + 1
+    if (x % keypair.e == 0):
+        keypair.d = x / keypair.e
+        break
+    i += 1
+
+private = open('private.pem','w')
+private.write(keypair.exportKey())
+private.close()
+
+然后openssl rsautl -decrypt -in enc1 -inkey private.pem 得到flag
 
