@@ -6,3 +6,7 @@ cd glibc-all-in-one
 chmod +x download
 chmod +x extract
  ./download 2.23-0ubuntu10_i386
+
+
+
+fangfaer patchelf --set-interpreter /opt/libs/2.27-3ubuntu1_amd64/ld-2.27.so ./patchelf
